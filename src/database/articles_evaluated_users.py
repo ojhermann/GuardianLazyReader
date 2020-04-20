@@ -1,12 +1,12 @@
 query: str = """
     CREATE TABLE IF NOT EXISTS articles_evaluated_users (
         user_id INTEGER,
-        article_id TEXT,
+        guardian_id TEXT,
         evaluated_on TIMESTAMP,
         liked BOOLEAN,
         PRIMARY KEY (
             user_id,
-            article_id,
+            guardian_id,
             evaluated_on));
     """
 
