@@ -3,7 +3,7 @@ import unittest
 
 from secret_stuff.database import login_dict
 from src.database.admin.get_tables import get_tables
-from src.database.users import create_users
+from src.database.users import create_users, create_index_name
 
 
 class TestUsers(unittest.TestCase):
@@ -14,6 +14,7 @@ class TestUsers(unittest.TestCase):
             cursor = connection.cursor()
 
             create_users(cursor)
+            create_index_name(cursor)
 
             self.assertTrue('users' in get_tables(cursor))
 

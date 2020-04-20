@@ -11,7 +11,7 @@ query: str = """
         guardian_type TEXT,
         web_publication_date TEXT,
         web_title TEXT,
-        web_url TEXT;
+        web_url TEXT);
     """
 
 
