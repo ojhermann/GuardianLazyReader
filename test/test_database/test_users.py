@@ -2,7 +2,7 @@ import psycopg2
 import unittest
 
 from secret_stuff.database import login_dict
-from src.database.admin import get_tables
+from src.database.utils.functions import get_tables
 from src.database.users import create_table, create_index_name
 
 

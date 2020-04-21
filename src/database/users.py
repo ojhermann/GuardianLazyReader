@@ -1,4 +1,4 @@
-from src.database.admin import execute_query
+from src.database.utils.functions import execute_query
 
 
 def create_table(psycopg2_cursor) -> None:
@@ -6,6 +6,7 @@ def create_table(psycopg2_cursor) -> None:
     create TABLE IF NOT EXISTS users (
         id SERIAL,
         name TEXT,
+        api_key TEXT,
         PRIMARY KEY (
             id));
     '''

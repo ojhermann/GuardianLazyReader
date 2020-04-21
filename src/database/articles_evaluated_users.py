@@ -1,4 +1,4 @@
-from src.database.admin import execute_query
+from src.database.utils.functions import execute_query
 
 
 def create_articles_evaluated_users(
