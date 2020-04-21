@@ -1,6 +1,10 @@
-query: str = """
+from src.database.admin import execute_query
+
+
+def create_articles(psycopg2_cursor) -> None:
+    query: str = """
     CREATE TABLE IF NOT EXISTS articles (
-        guardian_id TEXT PRIMARY KEY,
+        guardian_id TEXT,
         body_text TEXT,
         api_url TEXT,
         is_hosted BOOLEAN,
@@ -11,10 +15,9 @@ query: str = """
         guardian_type TEXT,
         web_publication_date TEXT,
         web_title TEXT,
-        web_url TEXT);
+        web_url TEXT,
+        PRIMARY KEY (
+            guardian_id));
     """
-
-
-def create_articles(
-        psycopg2_cursor) -> None:
-    psycopg2_cursor.execute(query)
+    execute_query(query=query,
+                  psycopg2_cursor=psycopg2_cursor)
