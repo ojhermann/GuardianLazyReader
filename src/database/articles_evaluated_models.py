@@ -1,4 +1,9 @@
-query: str = """
+from src.database.admin import execute_query
+
+
+def create_articles_evaluated_models(
+        psycopg2_cursor) -> None:
+    query: str = """
     CREATE TABLE IF NOT EXISTS articles_evaluated_models (
         user_id INTEGER,
         guardian_id TEXT,
@@ -11,7 +16,5 @@ query: str = """
             evaluated_on));
     """
 
-
-def create_articles_evaluated_models(
-        psycopg2_cursor) -> None:
-    psycopg2_cursor.execute(query)
+    execute_query(query=query,
+                  psycopg2_cursor=psycopg2_cursor)
