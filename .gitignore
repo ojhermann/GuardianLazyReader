@@ -129,7 +129,8 @@ dmypy.json
 .pyre/
 
 .idea/
-secret_stuff/
+
 .gitsecret/keys/random_seed
 !*.secret
-secrets/guardian_api.py
+secret_stuff/guardian_api.py
+secret_stuff/database.py
