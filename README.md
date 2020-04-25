@@ -1,6 +1,6 @@
 # GuardianLazyReader
-Ranking articles of the day by expected preference.
+Database related code for my `GuardianLazyReader`
 
 ## Note
-- I'm slowly rebuilding a private version into a public repo
-- this migration is a work in progress and will take some time
+- I'm rebuilding a private version of the `GuardianLazyReader` into a collection of public repos
+- this migration is a work in progress
