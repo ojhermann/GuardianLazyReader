@@ -1,12 +1,12 @@
 from src.lazy_reader_db.utils.functions import execute_query
 
 
-def create_articles(psycopg2_cursor) -> None:
+def create_guardian_content_if_not_exists(psycopg2_cursor) -> None:
     query: str = """
-    CREATE TABLE IF NOT EXISTS articles (
-        guardian_id TEXT,
-        body_text TEXT,
+    CREATE TABLE IF NOT EXISTS guardian_content (
         api_url TEXT,
+        body_text TEXT,
+        guardian_id TEXT,
         is_hosted BOOLEAN,
         pillar_id TEXT,
         pillar_name TEXT,
