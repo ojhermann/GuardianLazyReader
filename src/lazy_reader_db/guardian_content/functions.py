@@ -21,3 +21,11 @@ def create_guardian_content_if_not_exists(psycopg2_cursor) -> None:
     """
     execute_query(query=query,
                   psycopg2_cursor=psycopg2_cursor)
+
+
+def create_index_web_publication_date_if_not_exists(psycopg2_cursor) -> None:
+    query: str = '''
+    create INDEX IF NOT EXISTS web_publication_date_index ON guardian_content (web_publication_date DESC);
+    '''
+    execute_query(query=query,
+                  psycopg2_cursor=psycopg2_cursor)
