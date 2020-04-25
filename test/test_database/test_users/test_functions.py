@@ -2,12 +2,12 @@ import unittest
 
 import psycopg2
 
-from secret_stuff.database import login_dict
+from secret_stuff.lazy_reader_db import login_dict
 from secret_stuff.guardian_api import api_key_otto
-from src.database.users.functions import get_user_by_name, get_user_by_id, update_user_api_key, create_user, \
+from src.lazy_reader_db.users.functions import get_user_by_name, get_user_by_id, update_user_api_key, create_user, \
     delete_user, resurrect_user
-from src.database.users.user import User
-from src.database.utils.functions import get_tables
+from src.lazy_reader_db.users.user import User
+from src.lazy_reader_db.utils.functions import get_tables
 
 
 class TestFunctions(unittest.TestCase):

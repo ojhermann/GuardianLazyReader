@@ -2,7 +2,7 @@ from typing import List
 
 import psycopg2
 
-from secret_stuff.database import login_dict
+from secret_stuff.lazy_reader_db import login_dict
 
 
 def drop_table(table: str,

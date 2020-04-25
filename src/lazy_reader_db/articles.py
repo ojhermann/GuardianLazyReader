@@ -1,4 +1,4 @@
-from src.database.utils.functions import execute_query
+from src.lazy_reader_db.utils.functions import execute_query
 
 
 def create_articles(psycopg2_cursor) -> None:

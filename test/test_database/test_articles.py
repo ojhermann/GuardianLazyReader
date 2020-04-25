@@ -1,9 +1,9 @@
 import psycopg2
 import unittest
 
-from secret_stuff.database import login_dict
-from src.database.utils.functions import get_tables
-from src.database.articles import create_articles
+from secret_stuff.lazy_reader_db import login_dict
+from src.lazy_reader_db.utils.functions import get_tables
+from src.lazy_reader_db.articles import create_articles
 
 
 class TestArticlesEvaluatedUsers(unittest.TestCase):

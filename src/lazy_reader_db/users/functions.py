@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
-from src.database.users.user import User
-from src.database.utils.functions import execute_query
+from src.lazy_reader_db.users.user import User
+from src.lazy_reader_db.utils.functions import execute_query
 
 
 def create_table_if_not_exists(psycopg2_cursor) -> None:
