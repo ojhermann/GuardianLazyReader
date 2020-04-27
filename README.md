@@ -1,4 +1,4 @@
-# GuardianLazyReader
+# GuardianLazyReaderDatabase
 Database related code for my `GuardianLazyReader`
 
 ## Note
