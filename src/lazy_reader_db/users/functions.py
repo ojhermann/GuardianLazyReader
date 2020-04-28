@@ -46,7 +46,7 @@ def create_user(name: str,
 
 
 def delete_user(name: str,
-                psycopg2_cursor) -> User:
+                psycopg2_cursor) -> Optional[User]:
     query: str = '''
     UPDATE users
     SET deleted = True
@@ -59,7 +59,7 @@ def delete_user(name: str,
 
     t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
 
-    return User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
 
 
 def get_user_by_id(id: int,
@@ -93,7 +93,7 @@ def get_user_by_name(name: str,
 
 
 def resurrect_user(name: str,
-                   psycopg2_cursor) -> User:
+                   psycopg2_cursor) -> Optional[User]:
     query: str = '''
     UPDATE users
     SET deleted = False
@@ -106,12 +106,12 @@ def resurrect_user(name: str,
 
     t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
 
-    return User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
 
 
 def update_user_api_key(name: str,
                         api_key: str,
-                        psycopg2_cursor) -> User:
+                        psycopg2_cursor) -> Optional[User]:
     query: str = '''
     UPDATE users
     SET api_key = '{api_key_value}'
@@ -125,4 +125,4 @@ def update_user_api_key(name: str,
 
     t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
 
-    return User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
