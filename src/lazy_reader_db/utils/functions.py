@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import psycopg2
 
@@ -29,6 +29,17 @@ def get_tables(
     psycopg2_cursor.execute(query)
 
     return [tableTuple[2] for tableTuple in psycopg2_cursor.fetchall()]
+
+
+def return_optional(query: str,
+                    psycopg2_cursor,
+                    fnc) -> Optional:
+    execute_query(query=query,
+                  psycopg2_cursor=psycopg2_cursor)
+
+    result = psycopg2_cursor.fetchone()
+
+    return None if result is None else fnc(result)
 
 
 def update_table(fnc) -> None:

@@ -1,13 +1,9 @@
-from typing import Tuple, Optional
+from typing import Optional
 
-import psycopg2
-from guardian_api.main.guardian_api import GuardianApi
 from guardian_api.main.guardian_content import GuardianContent
 
-from secret_stuff.guardian_api import api_key_otto
-from secret_stuff.lazy_reader_db import login_dict
 from src.lazy_reader_db.guardian_content.utils import tuple_to_guardian_content
-from src.lazy_reader_db.utils.functions import execute_query
+from src.lazy_reader_db.utils.functions import execute_query, return_optional
 
 
 def create_guardian_content_if_not_exists(psycopg2_cursor) -> None:
@@ -82,12 +78,9 @@ def create_guardian_content(gc: GuardianContent,
                    web_title_value=gc.get_web_title(),
                    web_url_value=gc.get_web_url())
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[str, str, str, str, bool, str, str, str, str, str, str, str, str] = psycopg2_cursor.fetchone()
-
-    return None if t is None else tuple_to_guardian_content(t)
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_guardian_content)
 
 
 def delete_guardian_content(guardian_id: str,
@@ -98,12 +91,9 @@ def delete_guardian_content(guardian_id: str,
     RETURNING *;
     '''.format(guardian_id_value=guardian_id)
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[str, str, str, str, bool, str, str, str, str, str, str, str, str] = psycopg2_cursor.fetchone()
-
-    return None if t is None else tuple_to_guardian_content(t)
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_guardian_content)
 
 
 def get_guardian_content(guardian_id: str,
@@ -114,24 +104,6 @@ def get_guardian_content(guardian_id: str,
     WHERE guardian_id = '{guardian_id_value}';
     '''.format(guardian_id_value=guardian_id)
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[str, str, str, str, bool, str, str, str, str, str, str, str, str] = psycopg2_cursor.fetchone()
-
-    return None if t is None else tuple_to_guardian_content(t)
-
-
-if __name__ == '__main__':
-    connection = psycopg2.connect(**login_dict)
-    cursor = connection.cursor()
-
-    ga: GuardianApi = GuardianApi(guardian_api_key=api_key_otto)
-    gcs = ga.generate_multiple_items(guardian_response=ga.get_response()).get_content()
-    gc = gcs[0]
-
-    gct = create_guardian_content(gc, cursor)
-
-    print(type(gct))
-
-    print(gct)
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_guardian_content)
