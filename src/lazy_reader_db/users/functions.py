@@ -1,7 +1,8 @@
-from typing import Optional, Tuple
+from typing import Optional
 
 from src.lazy_reader_db.users.user import User
-from src.lazy_reader_db.utils.functions import execute_query
+from src.lazy_reader_db.users.utils import tuple_to_user
+from src.lazy_reader_db.utils.functions import execute_query, return_optional
 
 
 def create_table_if_not_exists(psycopg2_cursor) -> None:
@@ -14,6 +15,7 @@ def create_table_if_not_exists(psycopg2_cursor) -> None:
         PRIMARY KEY (
             id));
     '''
+
     execute_query(query=query,
                   psycopg2_cursor=psycopg2_cursor)
 
@@ -22,6 +24,7 @@ def create_index_name_if_not_exists(psycopg2_cursor) -> None:
     query: str = '''
     create INDEX IF NOT EXISTS name_index ON users (name ASC);
     '''
+
     execute_query(query=query,
                   psycopg2_cursor=psycopg2_cursor)
 
@@ -37,12 +40,9 @@ def create_user(name: str,
     '''.format(name_value=name,
                api_key_value=api_key)
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
-
-    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_user)
 
 
 def delete_user(name: str,
@@ -54,12 +54,9 @@ def delete_user(name: str,
     RETURNING *;
     '''.format(name_value=name)
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
-
-    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_user)
 
 
 def get_user_by_id(id: int,
@@ -69,12 +66,10 @@ def get_user_by_id(id: int,
     FROM users
     WHERE id = '{id_value}';
     '''.format(id_value=id)
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
 
-    t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
-
-    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_user)
 
 
 def get_user_by_name(name: str,
@@ -84,12 +79,10 @@ def get_user_by_name(name: str,
     FROM users
     WHERE name = '{name}';
     '''.format(name=name)
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
 
-    t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
-
-    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_user)
 
 
 def resurrect_user(name: str,
@@ -101,12 +94,9 @@ def resurrect_user(name: str,
     RETURNING *;
     '''.format(name_value=name)
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
-
-    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_user)
 
 
 def update_user_api_key(name: str,
@@ -120,9 +110,6 @@ def update_user_api_key(name: str,
     '''.format(name_value=name,
                api_key_value=api_key)
 
-    execute_query(query=query,
-                  psycopg2_cursor=psycopg2_cursor)
-
-    t: Tuple[int, str, str, bool] = psycopg2_cursor.fetchone()
-
-    return None if t is None else User(id=t[0], name=t[1], api_key=t[2], deleted=t[3])
+    return return_optional(query=query,
+                           psycopg2_cursor=psycopg2_cursor,
+                           fnc=tuple_to_user)
