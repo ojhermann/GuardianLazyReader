@@ -87,6 +87,11 @@ class TestFunctions(unittest.TestCase):
         self.assertEqual(api_key_otto,
                          otto_updated.get_api_key())
 
+        bogus_user: User = update_user_api_key(name='this_is_a_bogus_name',
+                                               api_key='fake_api_key',
+                                               psycopg2_cursor=TestFunctions.cursor)
+        self.assertTrue(bogus_user is None)
+
     def test_it_can_delete_and_resurrect_user(self):
         otto_deleted: User = delete_user(name='otto',
                                          psycopg2_cursor=TestFunctions.cursor)
@@ -95,6 +100,10 @@ class TestFunctions(unittest.TestCase):
         otto_resurrected: User = resurrect_user(name='otto',
                                                 psycopg2_cursor=TestFunctions.cursor)
         self.assertTrue(not otto_resurrected.is_deleted())
+
+        bogus_user: User = resurrect_user(name='this_is_a_bogus_name',
+                                          psycopg2_cursor=TestFunctions.cursor)
+        self.assertTrue(bogus_user is None)
 
 
 if __name__ == '__main__':
