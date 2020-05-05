@@ -6,7 +6,7 @@ import psycopg2
 
 from secret_stuff.lazy_reader_db import login_dict
 from src.lazy_reader_db.articles_evaluated_users.article_evaluated_user import ArticleEvaluatedUser
-from src.lazy_reader_db.articles_evaluated_users.functions import create_table_if_not_exists, create, get, delete
+from src.lazy_reader_db.articles_evaluated_users.functions import create, get, delete
 from src.lazy_reader_db.utils.functions import get_tables
 
 
@@ -18,14 +18,10 @@ class TestFunctions(unittest.TestCase):
                                                      evaluated_on=datetime.now(),
                                                      is_liked=True)
 
-    def test_it_can_create_table_if_not_exists(self):
-        create_table_if_not_exists(psycopg2_cursor=TestFunctions.cursor)
-
+    def test_table_exists(self):
         self.assertTrue('articles_evaluated_users' in get_tables(TestFunctions.cursor))
 
     def test_it_can_create_and_delete(self):
-        create_table_if_not_exists(psycopg2_cursor=TestFunctions.cursor)
-
         created_maybe: Optional[ArticleEvaluatedUser] = create(aeu=TestFunctions.aeu,
                                                                psycopg2_cursor=TestFunctions.cursor)
         self.are_equal(TestFunctions.aeu, created_maybe)
