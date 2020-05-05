@@ -42,6 +42,17 @@ def return_optional(query: str,
     return None if result is None else fnc(result)
 
 
+def return_optionals(query: str,
+                     psycopg2_cursor,
+                     fnc) -> Optional:
+    execute_query(query=query,
+                  psycopg2_cursor=psycopg2_cursor)
+
+    result = psycopg2_cursor.fetchall()
+
+    return None if result is None else fnc(result)
+
+
 def update_table(fnc) -> None:
     connection = None
 
