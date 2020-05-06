@@ -42,9 +42,10 @@ def return_optional(query: str,
     return None if result is None else fnc(result)
 
 
-def return_optionals(query: str,
-                     psycopg2_cursor,
-                     fnc) -> Optional:
+# todo https://github.com/ojhermann/GuardianLazyReaderDatabase/issues/14
+def return_many(query: str,
+                psycopg2_cursor,
+                fnc) -> Optional:
     execute_query(query=query,
                   psycopg2_cursor=psycopg2_cursor)
 

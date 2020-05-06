@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 from src.lazy_reader_db.articles_evaluated_users.article_evaluated_user import ArticleEvaluatedUser
 from src.lazy_reader_db.articles_evaluated_users.utils import tuple_to_article_evaluated_user, \
     tuple_to_article_evaluated_user_many
-from src.lazy_reader_db.utils.functions import execute_query, return_optional, return_optionals
+from src.lazy_reader_db.utils.functions import execute_query, return_optional, return_many
 
 
 def create_table_if_not_exists(
@@ -75,6 +75,6 @@ def get(aeu: ArticleEvaluatedUser,
                guardian_id_value=aeu.get_guardian_id(),
                evaluated_on_value=aeu.get_evaluated_on())
 
-    return return_optionals(query=query,
-                            psycopg2_cursor=psycopg2_cursor,
-                            fnc=tuple_to_article_evaluated_user_many)
+    return return_many(query=query,
+                       psycopg2_cursor=psycopg2_cursor,
+                       fnc=tuple_to_article_evaluated_user_many)
